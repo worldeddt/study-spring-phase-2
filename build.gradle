@@ -37,10 +37,16 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:3.4.1'
 
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation 'com.google.code.gson:gson:2.11.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-security:3.3.5'
 
 	// Spring Session Data Redis
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	// Lettuce Redis 클라이언트
+	implementation 'io.lettuce:lettuce-core:6.2.4.RELEASE' // Spring Boot 3.x와 호환
 
 	// 테스트 의존성
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

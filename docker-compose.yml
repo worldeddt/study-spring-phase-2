@@ -14,4 +14,4 @@ services:
     image: "redis:latest"
     container_name: redis
     ports:
-      - "1637:1637"
+      - "6379:6379"
