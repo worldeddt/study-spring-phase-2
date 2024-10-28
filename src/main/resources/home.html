@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>홈</title>
+</head>
+<body>
+<h1>홈 페이지</h1>
+<p th:text="'안녕하세요, ' + ${#authentication.name} + '님!'"></p>
+<p>현재 IP 주소: <span th:text="${#httpServletRequest.remoteAddr}"></span></p>
+<a th:href="@{/logout}">로그아웃</a>
+</body>
+</html>
