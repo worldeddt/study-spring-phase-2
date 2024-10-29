@@ -2,8 +2,11 @@ package springstudy.session.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Table(name = "study_user")
+@Entity
+@Getter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,5 +19,8 @@ public class User {
     private String email;
 
     @Column(name = "su_name")
-    private String name;
+    private String username;
+
+    @Column(name = "su_role")
+    private String role;
 }
