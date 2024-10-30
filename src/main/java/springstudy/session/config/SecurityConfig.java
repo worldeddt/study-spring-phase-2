@@ -22,6 +22,12 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private SessionRegistry sessionRegistry;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
     // PasswordEncoder 설정
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,8 +55,8 @@ public class SecurityConfig {
                 // 로그인 설정
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/perform_login") // 로그인 처리 URL 변경
-                        .defaultSuccessUrl("/home")
+                        .loginProcessingUrl("/perform_login")
+                        .successHandler(customAuthenticationSuccessHandler) // 커스텀 AuthenticationSuccessHandler 등록
                         .permitAll()
                 )
                 // 로그아웃 설정
@@ -64,31 +70,17 @@ public class SecurityConfig {
                 // 세션 관리 설정
                 .sessionManagement(session -> session
                         .maximumSessions(1)
-                        .maxSessionsPreventsLogin(true)
-                        .sessionRegistry(sessionRegistry())
+                        .maxSessionsPreventsLogin(false) // 중복 로그인 허용 (커스텀 로직으로 제어)
+                        .sessionRegistry(sessionRegistry)
                 )
-                .addFilterBefore(ipCheckFilter(), UsernamePasswordAuthenticationFilter.class)
                 // CSRF 설정 (H2 콘솔 사용 시 비활성화)
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
-                )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 // H2 콘솔 사용을 위한 프레임 옵션 설정
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions.sameOrigin())
                 );
 
         return http.build();
-    }
-
-    @Bean
-    public IpCheckFilter ipCheckFilter() {
-        return new IpCheckFilter();
-    }
-
-    // 세션 레지스트리 빈 등록
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
     }
 
     // HttpSessionEventPublisher 등록 (중복 로그인 제어를 위해 필요)
