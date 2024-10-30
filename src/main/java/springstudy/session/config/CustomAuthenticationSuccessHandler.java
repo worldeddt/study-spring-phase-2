@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -35,13 +36,16 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         if (existingSessionInfo != null) {
             String existingIp = existingSessionInfo.getIpAddress();
             if (!existingIp.equals(ipAddress)) {
-                // IP가 다르면 로그인 거부 또는 기존 세션 만료
-                // 방법 1: 로그인 거부
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "이미 다른 IP에서 로그인되어 있습니다.");
-                return;
+                // IP가 다르면 로그인 거부 (인증 실패로 처리)
+                // SecurityContext에서 인증 정보 제거
+                SecurityContextHolder.clearContext();
 
-                // 방법 2: 기존 세션 만료 (주석 해제하여 사용)
-                // existingSessionInfo.getSessionInformation().expireNow();
+                // 세션 무효화
+                request.getSession().invalidate();
+
+                // 로그인 페이지로 리다이렉트하며 에러 메시지 전달
+                response.sendRedirect("/login?error=duplicate_ip");
+                return;
             }
         }
 
@@ -55,6 +59,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         userSessionMap.put(username, sessionInfoWithIp);
 
         // 로그인 성공 후 홈 페이지로 리다이렉트
+
         response.sendRedirect("/home");
     }
 
