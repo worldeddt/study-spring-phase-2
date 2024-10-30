@@ -48,6 +48,10 @@ dependencies {
 	// Lettuce Redis 클라이언트
 	implementation 'io.lettuce:lettuce-core:6.2.4.RELEASE' // Spring Boot 3.x와 호환
 
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly('io.jsonwebtoken:jjwt-jackson:0.11.5') // JSON 처리용
+
 	// 테스트 의존성
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

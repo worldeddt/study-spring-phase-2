@@ -1,3 +1,5 @@
+<!-- src/main/resources/templates/login.html -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,7 +7,7 @@
 </head>
 <body>
 <h1>로그인 페이지</h1>
-<form th:action="@{/login}" method="post">
+<form th:action="@{/perform_login}" method="post">
     <div>
         <label>사용자 이름:</label>
         <input type="text" name="username" />
@@ -17,14 +19,12 @@
     <div>
         <button type="submit">로그인</button>
     </div>
-    <div th:if="${param.error}">
-        <p style="color:red;">로그인 오류: 사용자 이름 또는 비밀번호를 확인하세요.</p>
+    <!-- 에러 메시지 표시 -->
+    <div th:if="${error}">
+        <p style="color:red;" th:text="${error}"></p>
     </div>
     <div th:if="${param.logout}">
         <p>로그아웃되었습니다.</p>
-    </div>
-    <div th:if="${param.error} == 'ip_mismatch'">
-        <p style="color:red;">IP 주소가 변경되어 세션이 종료되었습니다.</p>
     </div>
 </form>
 </body>
