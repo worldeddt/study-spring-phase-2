@@ -20,7 +20,7 @@ public class IpCheckFilter extends OncePerRequestFilter {
 
         HttpSession session = request.getSession(false);
 
-        log.debug("{}", session);
+        log.debug("session : {}", session);
 
         if (session != null && SecurityContextHolder.getContext().getAuthentication() != null) {
             String sessionIp = (String) session.getAttribute("ipAddress");
