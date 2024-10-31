@@ -3,6 +3,7 @@ package springstudy.session.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import springstudy.session.components.SessionInformationWithIp;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler  {
 
@@ -51,6 +53,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         // 현재 세션과 IP 정보 저장
         HttpSession session = request.getSession();
+        log.debug("current session : {}", session.getId());
+        System.out.println("current session : "+session.getId());
         sessionRegistry.registerNewSession(session.getId(), authentication);
 
         SessionInformation sessionInfo = sessionRegistry.getSessionInformation(session.getId());
