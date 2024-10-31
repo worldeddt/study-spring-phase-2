@@ -15,6 +15,9 @@ public class HomeController {
     public String home(Model model, HttpServletRequest request, Authentication authentication) {
         // 클라이언트의 IP 주소 가져오기
 //        String clientIp = getClientIpAddress(request);
+
+        log.debug("session id : {}", request.getSession().getId());
+
         String clientIp = request.getRemoteAddr();
         model.addAttribute("clientIp", clientIp);
 
