@@ -33,6 +33,8 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model, @RequestParam(value = "error", required = false) String error) {
+        System.out.println("요청");
+        log.debug("=== === === 요청");
         if ("duplicate_ip".equals(error)) {
             model.addAttribute("error", "이미 다른 IP에서 로그인되어 있습니다.");
         } else if (error != null) {
@@ -53,7 +55,7 @@ public class LoginController {
                 // 사용자 없음
                 return "redirect:/login?error=true";
             }
-            log.info("===================== 유저 존재 =====================");
+            log.debug("===================== 유저 존재 =====================");
 
             // 비밀번호 비교
             if (!passwordEncoder.matches(password, user.getPassword())) {
@@ -61,7 +63,7 @@ public class LoginController {
                 return "redirect:/login?error=true";
             }
 
-            log.info("===================== 비밀번호 일치 =====================");
+            log.debug("===================== 비밀번호 일치 =====================");
 
             // 인증 성공 시 Authentication 객체 생성
             Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -70,10 +72,11 @@ public class LoginController {
             // SecurityContext에 인증 정보 설정
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            log.info("context : {}", SecurityContextHolder.getContext());
+            log.debug("context : {}", SecurityContextHolder.getContext());
 
             // 세션 생성 및 설정
             HttpSession session = request.getSession(true);
+
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
             // 로그인 성공 후 홈 페이지로 리다이렉트

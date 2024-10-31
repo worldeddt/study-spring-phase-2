@@ -78,7 +78,7 @@ public class IpCheckFilter implements Filter {
     private String getClientIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
 
-        log.info("client ip : {}", ip);
+        log.debug("client ip : {}", ip);
 
         if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
             // 다중 프록시 환경일 경우 첫 번째 IP가 실제 클라이언트 IP
