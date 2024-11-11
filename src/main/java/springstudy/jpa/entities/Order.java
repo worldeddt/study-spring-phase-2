@@ -15,4 +15,7 @@ public class Order {
     private Long id;
 
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Product product;
+
 }
