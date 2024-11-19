@@ -12,6 +12,6 @@ import java.awt.image.MemoryImageSource;
 public class MemoryApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MemoryImageSource.class, args);
+        SpringApplication.run(MemoryApplication.class, args);
     }
 }
