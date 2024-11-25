@@ -17,11 +17,10 @@ public class User {
 
     private String username;
     private int age;
+    private String email;
 
-    public User User(UserDomain userDomain) {
+    public void setUser(UserDomain userDomain) {
         username = userDomain.getUsername();
         age = userDomain.getAge();
-
-        return this;
     }
 }
