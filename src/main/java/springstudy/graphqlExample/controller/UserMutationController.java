@@ -23,4 +23,13 @@ public class UserMutationController {
             new CreateUserDto(username, age, email)
         );
     }
+
+    @MutationMapping
+    public User updateUser(
+            @Argument int stockQuantity,
+            @Argument int price,
+            @Argument String name
+    ) {
+
+    }
 }

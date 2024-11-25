@@ -5,7 +5,36 @@ type Query {
 
 type Mutation {
     createUser(username: String!, age: Int!, email:String): User
-    createProduct(name: Int!, count)
+    createItem(stockQuantity: Int!, price: String!, name: String!):Item
+    createOrder(name:String!, orderItemId: Int!, userId: Int!):Order
+    createOrderItem(
+        item:Int!
+        order:Int!
+        orderPrice:Int!
+        count:Int!
+    ):OrderItem
+}
+
+type OrderItem {
+    id:ID!
+    item:Int!
+    order:Int!
+    orderPrice:Int!
+    count:Int!
+}
+
+type Order {
+    id:ID!
+    userId:Int!
+    orderItemId:Int!
+    orderStatus:String!
+}
+
+type Item {
+    id:ID!
+    stockQuantity:Int!
+    price:Int!
+    name:String!
 }
 
 type User {
