@@ -26,6 +26,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-graphql'
+	implementation group: 'com.graphql-java-kickstart', name: 'graphiql-spring-boot-starter', version: '11.1.0'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	compileOnly 'org.projectlombok:lombok'
@@ -40,7 +41,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson
 	implementation 'com.google.code.gson:gson:2.11.0'
 
-	implementation 'org.springframework.boot:spring-boot-starter-security:3.3.5'
+//	implementation 'org.springframework.boot:spring-boot-starter-security:3.3.5'
 
 	// Spring Session Data Redis
 	implementation 'org.springframework.session:spring-session-data-redis'
