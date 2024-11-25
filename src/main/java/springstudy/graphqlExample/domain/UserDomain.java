@@ -17,18 +17,14 @@ public class UserDomain {
     private String email;
 
     public UserDomain(User user) {
-        UserDomain.builder()
-                .age(user.getAge())
-                .email(user.getEmail())
-                .username(user.getUsername())
-                .build();
+        this.username = user.getUsername();
+        this.age = user.getAge();
+        this.email = user.getEmail();
     }
 
     public UserDomain(CreateUserDto createUserDto) {
-        UserDomain.builder()
-                .age(createUserDto.getAge())
-                .email(createUserDto.getEmail())
-                .username(createUserDto.getUsername())
-                .build();
+        this.username = createUserDto.getUsername();
+        this.age = createUserDto.getAge();
+        this.email = createUserDto.getEmail();
     }
 }

@@ -13,6 +13,8 @@ spring:
     password: eddy
   graphql:
     cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
       allowed-origin-patterns: "*"
     graphiql:
       enabled: true
@@ -42,5 +44,4 @@ server:
 
 logging:
   level:
-    springstudy:
-      session: debug
+    springstudy: debug

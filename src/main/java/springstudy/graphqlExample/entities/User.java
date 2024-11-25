@@ -1,14 +1,18 @@
 package springstudy.graphqlExample.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import springstudy.graphqlExample.domain.UserDomain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table
+@Table(name = "user")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor()
+@Builder(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
 
     @Id
@@ -22,8 +26,12 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
     public void setUser(UserDomain userDomain) {
-        username = userDomain.getUsername();
-        age = userDomain.getAge();
+        this.username = userDomain.getUsername();
+        this.age = userDomain.getAge();
+        this.email = userDomain.getEmail();
     }
 }

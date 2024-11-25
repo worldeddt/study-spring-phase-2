@@ -16,11 +16,11 @@ public class UserMutationController {
 
     @MutationMapping
     public User createUser(
-            @Argument String name, @Argument Integer age, @Argument String email
+            @Argument String username, @Argument Integer age, @Argument String email
     ) {
 
         return userService.createUser(
-            new CreateUserDto(name, age, email)
+            new CreateUserDto(username, age, email)
         );
     }
 }
