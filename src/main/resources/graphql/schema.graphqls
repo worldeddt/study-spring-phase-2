@@ -1,0 +1,15 @@
+type Query {
+    getUserById (id: ID!): User
+    getUsers: [User]
+}
+
+type Mutation {
+    createUser(name: String!, age: Int!, email:String): User
+}
+
+type User {
+    id: ID!
+    name: String!
+    age: Int!
+    email:String
+}

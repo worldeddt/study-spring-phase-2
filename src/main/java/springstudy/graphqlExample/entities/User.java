@@ -15,8 +15,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private int age;
+    @Column(nullable = false)
     private String email;
 
     public void setUser(UserDomain userDomain) {

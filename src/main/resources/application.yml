@@ -13,12 +13,16 @@ spring:
     password: eddy
   graphql:
     cors:
-      cors:
-        allowed-origins: "*"
-        allowed-methods: "*"
+      allowed-origin-patterns: "*"
     graphiql:
       enabled: true
       path: /graphiql
+    path: /graphql
+    schema:
+      inspection:
+        enabled: true
+      printer:
+        enabled: true
   jpa:
     properties:
       hibernate:
