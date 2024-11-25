@@ -35,7 +35,6 @@ spring:
       port: 6379
       host: localhost
 server:
-  port: 8080
   servlet:
     session:
       timeout: 1800
