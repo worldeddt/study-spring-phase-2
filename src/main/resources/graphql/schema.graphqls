@@ -1,11 +1,24 @@
 type Query {
     getUserById (id: ID!): User
     getUsers: [User]
+    getItemById (id: ID!): Item
+    getItems: [Item]
+    getOrderById (id:ID!): Order
+    getOrders: [Order]
 }
+
+input CreateItemDto {
+    name : String!
+    price : Int!
+    stockQuantity : Int!
+    type: String!
+    imgPath: String!
+}
+
 
 type Mutation {
     createUser(username: String!, age: Int!, email:String): User
-    createItem(stockQuantity: Int!, price: String!, name: String!):Item
+    createItem(input: CreateItemDto!):Item
     createOrder(name:String!, orderItemId: Int!, userId: Int!):Order
     createOrderItem(
         item:Int!

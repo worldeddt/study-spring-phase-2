@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // 싱글 테이블 전략 설정
+@DiscriminatorColumn(name = "type")  // 구분컬럼명 지정
 @Getter
 @Setter
 public abstract class Item {

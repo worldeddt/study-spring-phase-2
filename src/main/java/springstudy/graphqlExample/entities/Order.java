@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "order")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,7 +35,7 @@ public class Order {
     private OrderStatus status;  // ORDER, CANCEL
 
     // 연관관계 편의 메소드
-    public void setMember(User user) {
+    public void setUser(User user) {
         this.user = user;
         user.getOrders().add(this);
     }
