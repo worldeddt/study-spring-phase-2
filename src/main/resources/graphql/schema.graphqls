@@ -15,11 +15,18 @@ input CreateItemDto {
     imgPath: String!
 }
 
+input CreateOrderDto {
+    userId : Int!
+    itemId : Int!
+    price : Int!
+    quantity : Int!
+}
+
 
 type Mutation {
     createUser(username: String!, age: Int!, email:String): User
     createItem(input: CreateItemDto!):Item
-    createOrder(name:String!, orderItemId: Int!, userId: Int!):Order
+    createOrder(input: CreateOrderDto!):Order
     createOrderItem(
         item:Int!
         order:Int!

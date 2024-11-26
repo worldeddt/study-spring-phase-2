@@ -46,8 +46,8 @@ public class Order {
     }
 
     // 생성 메소드
-    public static Order createOrder(
-            User user, OrderItem...orderItems
+    public static Order saveOrder(
+            User user, List<OrderItem> orderItems
     ) {
         Order order = new Order();
         order.setUser(user);
