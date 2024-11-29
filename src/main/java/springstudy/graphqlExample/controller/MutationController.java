@@ -1,6 +1,8 @@
 package springstudy.graphqlExample.controller;
 
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ import springstudy.graphqlExample.services.ItemService;
 import springstudy.graphqlExample.services.OrderService;
 import springstudy.graphqlExample.services.UserService;
 
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MutationController {
@@ -43,6 +47,7 @@ public class MutationController {
     public Order createOrder(
             @Argument("input") CreateOrderDto dto
     ) {
+        log.debug("create order dto : {}", new Gson().toJson(dto));
         return orderService.createOrderOne(dto);
     }
 }
