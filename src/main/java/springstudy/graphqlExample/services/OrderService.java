@@ -30,24 +30,28 @@ public class OrderService {
     @Transactional
     public Order createOrderOne(CreateOrderDto createOrderDto) {
 
-        Item item = itemRepository.findById(createOrderDto.getItemId())
+        Item item = itemRepository.findById((long) createOrderDto.getItemId())
                 .orElseThrow(() -> new RuntimeException("item not found"));
 
-        OrderItem saveOrderItem = orderItemRepository.save(
-                createOrderItem(
-                        item,
-                        createOrderDto.getPrice(),
-                        createOrderDto.getQuantity()
-                )
+        OrderItem orderItem = createOrderItem(
+                item,
+                createOrderDto.getPrice(),
+                createOrderDto.getQuantity()
         );
 
-        OrderItem orderItem =
-                orderItemRepository.findById(saveOrderItem.getId())
-                .orElseThrow(() -> new RuntimeException("order item not found"));
+//        OrderItem saveOrderItem = orderItemRepository.save(
+//                createOrderItem(
+//                        item,
+//                        createOrderDto.getPrice(),
+//                        createOrderDto.getQuantity()
+//                )
+//        );
+//
+//        OrderItem orderItem =
+//                orderItemRepository.findById(saveOrderItem.getId())
+//                .orElseThrow(() -> new RuntimeException("order item not found"));
 
-        item.removeStock(1);
-
-        User findUser = userRepository.findById(createOrderDto.getUserId())
+        User findUser = userRepository.findById((long) createOrderDto.getItemId())
                 .orElseThrow(() -> new RuntimeException("user not found"));
 
         return saveOrder(

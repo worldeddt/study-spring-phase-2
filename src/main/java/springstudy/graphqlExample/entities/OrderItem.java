@@ -10,7 +10,8 @@ import lombok.*;
 @Getter @Setter
 public class OrderItem {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "order_item_id")
     private Long id;
 
@@ -19,7 +20,7 @@ public class OrderItem {
     private Item item;	// 주문 상품
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;	// 주문
 
     private int orderPrice; // 주문 가격

@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "order_id")
     private Long id;
 

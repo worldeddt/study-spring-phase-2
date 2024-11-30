@@ -29,6 +29,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
     hibernate:
       ddl-auto: create
     show-sql: true
@@ -44,4 +45,11 @@ server:
 
 logging:
   level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
     springstudy: debug
