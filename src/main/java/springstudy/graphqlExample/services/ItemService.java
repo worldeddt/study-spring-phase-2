@@ -1,11 +1,12 @@
 package springstudy.graphqlExample.services;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springstudy.graphqlExample.controller.dto.CreateItemDto;
+import springstudy.graphqlExample.controller.dto.UpdateItemDto;
 import springstudy.graphqlExample.domain.ItemDomain;
-import springstudy.graphqlExample.domain.UserDomain;
 import springstudy.graphqlExample.entities.Item;
 import springstudy.graphqlExample.entities.Ticket;
 import springstudy.graphqlExample.repository.ItemRepository;
@@ -30,6 +31,20 @@ public class ItemService {
         return itemRepository.save(ticket);
     }
 
+    @Transactional
+    public Item updateItem(UpdateItemDto updateItemDto) {
+
+        Item item = itemRepository.findById(updateItemDto.getId())
+                .orElseThrow(() -> new RuntimeException("item not found"));
+
+        if (updateItemDto.getName() != null) item.setName(updateItemDto.getName());
+
+        if (updateItemDto.getPrice() != null) item.setPrice(updateItemDto.getPrice());
+
+        if (updateItemDto.getStockQuantity() != null) item.setStockQuantity(updateItemDto.getStockQuantity());
+
+        return item;
+    }
 
     public List<ItemDomain> getItems() {
         List<ItemDomain> itemDomains = new ArrayList<>();

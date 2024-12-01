@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import springstudy.graphqlExample.controller.dto.CreateItemDto;
 import springstudy.graphqlExample.controller.dto.CreateOrderDto;
 import springstudy.graphqlExample.controller.dto.CreateUserDto;
+import springstudy.graphqlExample.controller.dto.UpdateItemDto;
 import springstudy.graphqlExample.entities.Item;
 import springstudy.graphqlExample.entities.Order;
 import springstudy.graphqlExample.entities.User;
@@ -48,6 +49,14 @@ public class MutationController {
             @Argument("input") CreateOrderDto dto
     ) {
         log.debug("create order dto : {}", new Gson().toJson(dto));
-        return orderService.createOrderOne(dto);
+        return orderService.createOrder(dto);
+    }
+
+    @MutationMapping
+    public Item updateItem(
+            @Argument("input") UpdateItemDto dto
+    ) {
+        log.debug("update item dto : {}", new Gson().toJson(dto));
+        return itemService.updateItem(dto);
     }
 }

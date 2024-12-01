@@ -4,28 +4,13 @@ type Query {
     getItemById (id: ID!): Item
     getItems: [Item]
     getOrderById (id:ID!): Order
-    getOrders: [Order]
+    getOrders: [OrderDomain]
 }
-
-input CreateItemDto {
-    name : String!
-    price : Int!
-    stockQuantity : Int!
-    type: String!
-    imgPath: String!
-}
-
-input CreateOrderDto {
-    userId : Int!
-    itemId : Int!
-    price : Int!
-    quantity : Int!
-}
-
 
 type Mutation {
     createUser(username: String!, age: Int!, email:String): User
     createItem(input: CreateItemDto!):Item
+    updateItem(input: UpdateItemDto!):Item
     createOrder(input: CreateOrderDto!):Order
     createOrderItem(
         item:Int!
@@ -50,6 +35,13 @@ type Order {
     orderStatus:String!
 }
 
+type OrderDomain {
+    id:ID
+    userId:Int
+    orderItemId:[Int]
+    orderStatus:String
+}
+
 type Item {
     id:ID!
     stockQuantity:Int!
@@ -62,4 +54,26 @@ type User {
     username: String!
     age: Int!
     email:String
+}
+
+input UpdateItemDto {
+    id: Int!
+    name: String
+    price: Int
+    stockQuantity: Int
+}
+
+input CreateItemDto {
+    name : String!
+    price : Int!
+    stockQuantity : Int!
+    type: String!
+    imgPath: String!
+}
+
+input CreateOrderDto {
+    userId : Int!
+    itemIds : [Int!]!
+    price : Int!
+    quantity : Int!
 }

@@ -21,7 +21,6 @@ public class ItemDomain {
 
     private int stockQuantity;
 
-
     public ItemDomain(Item item) {
         this.id = item.getId();
         this.name = item.getName();

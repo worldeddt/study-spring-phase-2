@@ -3,8 +3,11 @@ package springstudy.graphqlExample.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import springstudy.graphqlExample.controller.dto.CreateOrderDto;
+import springstudy.graphqlExample.domain.ItemDomain;
+import springstudy.graphqlExample.domain.OrderDomain;
 import springstudy.graphqlExample.entities.Item;
 import springstudy.graphqlExample.entities.Order;
 import springstudy.graphqlExample.entities.OrderItem;
@@ -14,11 +17,14 @@ import springstudy.graphqlExample.repository.OrderItemRepository;
 import springstudy.graphqlExample.repository.OrderRepository;
 import springstudy.graphqlExample.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static springstudy.graphqlExample.entities.Order.saveOrder;
 import static springstudy.graphqlExample.entities.OrderItem.createOrderItem;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -27,36 +33,56 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    public List<OrderDomain> getOrders() {
+        List<OrderDomain> orderDomains = new ArrayList<>();
+        orderRepository.findAll().forEach(orders ->
+                orderDomains.add(new OrderDomain(orders)));
+
+        return orderDomains;
+    }
+
     @Transactional
-    public Order createOrderOne(CreateOrderDto createOrderDto) {
+    public Order createOrder(CreateOrderDto createOrderDto) {
 
-        Item item = itemRepository.findById((long) createOrderDto.getItemId())
-                .orElseThrow(() -> new RuntimeException("item not found"));
+        User findUser = null;
+        List<OrderItem> orderItems = new ArrayList<>();
 
-        OrderItem orderItem = createOrderItem(
-                item,
-                createOrderDto.getPrice(),
-                createOrderDto.getQuantity()
-        );
+        try {
+            for (Integer itemId : createOrderDto.getItemIds()) {
+                Item item = itemRepository.findById((long) itemId)
+                        .orElseThrow(() -> new RuntimeException("item not found"));
 
-//        OrderItem saveOrderItem = orderItemRepository.save(
-//                createOrderItem(
-//                        item,
-//                        createOrderDto.getPrice(),
-//                        createOrderDto.getQuantity()
-//                )
-//        );
-//
-//        OrderItem orderItem =
-//                orderItemRepository.findById(saveOrderItem.getId())
-//                .orElseThrow(() -> new RuntimeException("order item not found"));
+                orderItems.add(createOrderItem(
+                        item,
+                        createOrderDto.getPrice(),
+                        createOrderDto.getQuantity()
+                ));
+            }
 
-        User findUser = userRepository.findById((long) createOrderDto.getItemId())
-                .orElseThrow(() -> new RuntimeException("user not found"));
+            findUser = userRepository.findById((long) createOrderDto.getUserId())
+                    .orElseThrow(() -> new RuntimeException("user not found"));
 
-        return saveOrder(
-                findUser,
-                List.of(orderItem)
-        );
+            log.debug("1. find user : {}", findUser.getId());
+
+            Order order = saveOrder(
+                    findUser,
+                    orderItems
+            );
+
+            orderRepository.save(order);
+
+            log.debug("1. find order : {}", order.getId());
+            return order;
+        } catch (RuntimeException e) {
+            orderItems.forEach(orderItem -> {
+                orderItem.cancel();
+            });
+
+            log.error("==== order item cancel ====");
+
+            log.error(e.getMessage());
+
+            return null;
+        }
     }
 }
