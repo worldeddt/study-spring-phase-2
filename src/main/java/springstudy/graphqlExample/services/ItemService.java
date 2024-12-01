@@ -23,6 +23,11 @@ public class ItemService {
     public Item createItem(
             CreateItemDto createItemDto
     ) {
+
+        if (!createItemDto.getType().equals("ticket")) {
+            throw new RuntimeException("Unsupported type: " + createItemDto.getType());
+        }
+
         Ticket ticket = new Ticket();
         ticket.setName(createItemDto.getName());
         ticket.setPrice(createItemDto.getPrice());

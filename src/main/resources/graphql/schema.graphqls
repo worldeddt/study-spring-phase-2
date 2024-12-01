@@ -8,6 +8,7 @@ type Query {
 }
 
 type Mutation {
+    cancelOrder(cancelOrder: CancelOrderDto!):Order
     createUser(username: String!, age: Int!, email:String): User
     createItem(input: CreateItemDto!):Item
     updateItem(input: UpdateItemDto!):Item
@@ -76,4 +77,8 @@ input CreateOrderDto {
     itemIds : [Int!]!
     price : Int!
     quantity : Int!
+}
+
+input CancelOrderDto {
+    orderId: Int!
 }

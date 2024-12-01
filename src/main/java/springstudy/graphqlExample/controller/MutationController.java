@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
-import springstudy.graphqlExample.controller.dto.CreateItemDto;
-import springstudy.graphqlExample.controller.dto.CreateOrderDto;
-import springstudy.graphqlExample.controller.dto.CreateUserDto;
-import springstudy.graphqlExample.controller.dto.UpdateItemDto;
+import springstudy.graphqlExample.controller.dto.*;
 import springstudy.graphqlExample.entities.Item;
 import springstudy.graphqlExample.entities.Order;
 import springstudy.graphqlExample.entities.User;
@@ -58,5 +55,13 @@ public class MutationController {
     ) {
         log.debug("update item dto : {}", new Gson().toJson(dto));
         return itemService.updateItem(dto);
+    }
+
+    @MutationMapping
+    public Order cancelOrder(
+            @Argument("cancelOrder") CancelOrderDto dto
+    ) {
+        log.debug("cancel order dto : {}", new Gson().toJson(dto));
+        return orderService.cancelOrder(dto);
     }
 }
