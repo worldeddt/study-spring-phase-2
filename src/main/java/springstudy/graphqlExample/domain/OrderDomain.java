@@ -1,7 +1,6 @@
 package springstudy.graphqlExample.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 import springstudy.graphqlExample.entities.Order;
 
 import java.util.ArrayList;
@@ -11,20 +10,20 @@ import java.util.List;
 public class OrderDomain {
     private Long id;
     private Long userId;
-    private List<Long> orderItemId;
+    private List<OrderItemDomain> orderItemDomains;
     private String orderStatus;
 
     public OrderDomain(Order order) {
         this.id = order.getId();
         this.userId = order.getUser().getId();
 
-        List<Long> orderItemId = new ArrayList<>();
+        List<OrderItemDomain> orderItemDomains = new ArrayList<>();
         order.getOrderItems().forEach(orderItem -> {
-            assert orderItemId != null;
-            orderItemId.add(orderItem.getId());
+            assert orderItemDomains != null;
+            orderItemDomains.add(new OrderItemDomain(orderItem));
         });
 
-        this.orderItemId = orderItemId;
+        this.orderItemDomains = orderItemDomains;
         this.orderStatus = order.getStatus().toString();
     }
 }

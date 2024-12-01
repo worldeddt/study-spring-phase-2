@@ -13,34 +13,14 @@ type Mutation {
     createItem(input: CreateItemDto!):Item
     updateItem(input: UpdateItemDto!):Item
     createOrder(input: CreateOrderDto!):Order
-    createOrderItem(
-        item:Int!
-        order:Int!
-        orderPrice:Int!
-        count:Int!
-    ):OrderItem
 }
 
-type OrderItem {
-    id:ID!
-    item:Int!
-    order:Int!
-    orderPrice:Int!
-    count:Int!
-}
 
 type Order {
     id:ID!
     userId:Int!
     orderItemId:Int!
     orderStatus:String!
-}
-
-type OrderDomain {
-    id:ID
-    userId:Int
-    orderItemId:[Int]
-    orderStatus:String
 }
 
 type Item {
@@ -81,4 +61,28 @@ input CreateOrderDto {
 
 input CancelOrderDto {
     orderId: Int!
+}
+
+
+#======== domains =======#
+
+type ItemDomain {
+    id:ID
+    name: String
+    price: Int
+    stockQuantity: Int
+}
+
+type OrderItemDomain {
+    id:ID
+    item:ItemDomain
+    orderPrice:Int
+    count:Int
+}
+
+type OrderDomain {
+    id:ID
+    userId:Int
+    orderItemDomains:[OrderItemDomain]
+    orderStatus:String
 }
