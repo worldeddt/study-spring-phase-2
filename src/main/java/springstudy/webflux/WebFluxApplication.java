@@ -1,12 +1,12 @@
-package springstudy.graphqlExample;
+package springstudy.webflux;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication
-public class GraphqlExampleApplication {
-
+@SpringBootApplication
+public class WebFluxApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GraphqlExampleApplication.class, args);
+        SpringApplication.run(WebFluxApplication.class, args);
     }
 }
