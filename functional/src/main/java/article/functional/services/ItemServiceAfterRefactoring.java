@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ItemServiceBeforeRefactoring {
+public class ItemServiceAfterRefactoring {
 
     private Cart shopping_cart;
     private Cart shopping_cart_total;
-
+    
     private void add_item_to_car(String name, int price) {
         shopping_cart = add_item(shopping_cart, name, price);
-
-        calc_cart_total();
+        calc_cart_total(shopping_cart);
     }
 
     private Cart add_item(Cart shopping_cart, String name, int price) {
@@ -23,18 +22,17 @@ public class ItemServiceBeforeRefactoring {
     }
 
     //main
-    private void calc_cart_total() {
-        shopping_cart_total = calc_total(shopping_cart);
-        set_cart_total_dom();
+    private void calc_cart_total(Cart shopping_cart) {
+        var total = calc_total(shopping_cart);
+        set_cart_total_dom(total);
         update_shipping_icons(shopping_cart);
-        update_tax_dom();
+        update_tax_dom(total);
+
+        shopping_cart_total = total;
     }
 
-    private void update_tax_dom() {
-        set_tax_dom(calc_total(shopping_cart_total));
-    }
-
-    private void set_tax_dom(Cart shoppingCartTotal) {
+    private void set_cart_total_dom(Cart shopping_cart_total) {
+        // shopping_cart_total
     }
 
     private void update_shipping_icons(Cart shopping_cart) {
@@ -55,13 +53,15 @@ public class ItemServiceBeforeRefactoring {
         return false;
     }
 
-    private List<Button> get_buy_buttons_dom() {
-        return new ArrayList<>();
+    private void update_tax_dom(Cart shopping_cart_total) {
+        set_tax_dom(calc_total(shopping_cart_total));
     }
 
-    private void set_cart_total_dom() {
+    private void set_tax_dom(Cart shoppingCartTotal) {
+    }
 
-        // shopping_cart_total;
+    private List<Button> get_buy_buttons_dom() {
+        return new ArrayList<>();
     }
 
     private Cart calc_total(Cart shopping_cart) {
