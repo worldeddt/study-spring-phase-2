@@ -7,6 +7,9 @@ build/
 target/
 .idea
 
+connection-fool/docker/mysql-master-a/data/
+connection-fool/docker/mysql-master-b/data/
+
 ### STS ###
 .apt_generated
 .classpath
