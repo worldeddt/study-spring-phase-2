@@ -9,8 +9,11 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: eddy
+      MYSQL_REPLICATION_PASSWORD: eddy
+    command: --require_secure_transport=OFF
     volumes:
-      - ./docker/mysql-master-a/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql-master-a/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./docker/mysql-master-a/mysqld.cnf:/etc/mysql/my.cnf
       - ./docker/mysql-master-a/data:/var/lib/mysql
 #      - ./docker/mysql-master-a/server-key.pem:/var/lib/mysql/server-key.pem
 #      - ./docker/mysql-master-a/server-cert.pem:/var/lib/mysql/server-cert.pem
@@ -29,8 +32,11 @@ services:
       - "3308:3306"
     environment:
       MYSQL_ROOT_PASSWORD: eddy
+      MYSQL_REPLICATION_PASSWORD: eddy
+    command: --require_secure_transport=OFF
     volumes:
-      - ./docker/mysql-master-b/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql-master-b/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./docker/mysql-master-b/mysqld.cnf:/etc/mysql/my.cnf
       - ./docker/mysql-master-b/data:/var/lib/mysql
 #      - ./docker/mysql-master-b/server-key.pem:/var/lib/mysql/server-key.pem
 #      - ./docker/mysql-master-b/server-cert.pem:/var/lib/mysql/server-cert.pem
