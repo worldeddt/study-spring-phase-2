@@ -1,8 +1,9 @@
 [mysqld]
-server-id=2
+server-id=3
 log-bin=mysql-bin
 binlog-format=ROW
 gtid_mode=ON
+log_bin=ON
 bind_address=0.0.0.0
 enforce-gtid-consistency=ON
 require_secure_transport=ON

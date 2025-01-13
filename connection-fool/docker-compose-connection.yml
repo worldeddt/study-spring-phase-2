@@ -10,7 +10,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: eddy
       MYSQL_REPLICATION_PASSWORD: eddy
-    command: --require_secure_transport=OFF
+    command: --require_secure_transport=ON
     volumes:
 #      - ./docker/mysql-master-a/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
       - ./docker/mysql-master-a/mysqld.cnf:/etc/mysql/my.cnf
@@ -33,7 +33,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: eddy
       MYSQL_REPLICATION_PASSWORD: eddy
-    command: --require_secure_transport=OFF
+    command: --require_secure_transport=ON
     volumes:
 #      - ./docker/mysql-master-b/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
       - ./docker/mysql-master-b/mysqld.cnf:/etc/mysql/my.cnf
