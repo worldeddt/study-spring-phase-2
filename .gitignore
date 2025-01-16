@@ -7,6 +7,8 @@ build/
 target/
 .idea
 
+monitoring/data
+
 connection-fool/docker/mysql-master-a/data/
 connection-fool/docker/mysql-master-b/data/
 
