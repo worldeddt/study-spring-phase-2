@@ -7,6 +7,8 @@ build/
 target/
 .idea
 
+nonstop/node_modules
+
 monitoring/data
 
 connection-fool/docker/mysql-master-a/data/
