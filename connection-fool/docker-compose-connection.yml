@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  mysql-master-a:
+    image: mysql:8.4.3
+    container_name: mysql-master-a
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: eddy
+      MYSQL_REPLICATION_PASSWORD: eddy
+    command: --require_secure_transport=ON
+    volumes:
+#      - ./docker/mysql-master-a/my.cnf:/etc/mysql/mysql.conf.d/my.cnf
+      - ./docker/mysql-master-a/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mysql-master-a/data:/var/lib/mysql
+#      - ./docker/mysql-master-a/server-key.pem:/var/lib/mysql/server-key.pem
+#      - ./docker/mysql-master-a/server-cert.pem:/var/lib/mysql/server-cert.pem
+#      - ./docker/mysql-master-a/client-cert.pem:/var/lib/mysql/client-cert.pem
+#      - ./docker/mysql-master-a/client-key.pem:/var/lib/mysql/client-key.pem
+#      - ./docker/mysql-master-a/ca.pem:/var/lib/mysql/ca.pem
+    networks:
+      black-net:
+        ipv4_address: 172.18.0.3
+
+  mysql-master-b:
+    image: mysql:8.4.3
+    container_name: mysql-master-b
+    restart: always
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: eddy
+      MYSQL_REPLICATION_PASSWORD: eddy
+    command: --defaults-file=/etc/mysql/my.cnf
+    volumes:
+#      - ./docker/mysql-master-b/my.cnf:/etc/mysql/mysql.conf.d/my.cnf
+      - ./docker/mysql-master-b/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mysql-master-b/data:/var/lib/mysql
+#      - ./docker/mysql-master-b/server-key.pem:/var/lib/mysql/server-key.pem
+#      - ./docker/mysql-master-b/server-cert.pem:/var/lib/mysql/server-cert.pem
+#      - ./docker/mysql-master-b/client-cert.pem:/var/lib/mysql/client-cert.pem
+#      - ./docker/mysql-master-b/client-key.pem:/var/lib/mysql/client-key.pem
+#      - ./docker/mysql-master-b/ca.pem:/var/lib/mysql/ca.pem
+    networks:
+      black-net:
+        ipv4_address: 172.18.0.4
+
+  haproxy:
+    image: haproxy:latest
+    container_name: haproxy
+    restart: always
+    ports:
+      - "3306:3306"
+      - "8080:8080"  # HAProxy 웹 UI 포트
+    volumes:
+      - ./docker/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      black-net:
+        ipv4_address: 172.18.0.2
+
+networks:
+  black-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
