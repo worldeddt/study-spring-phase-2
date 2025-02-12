@@ -12,11 +12,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class AopConfig {
 
-    @Around("execution(* prototype.aop.controller.*.*(..))")
-    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+//    @Around("execution(* prototype.aop.controller.*.*(..))")
+//    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+//
+//        log.info("controller aop start");
+//        joinPoint.proceed();
+//        log.info("controller aop end");
+//    }
 
-        log.info("controller aop start");
+
+    @Around("@annotation(com.fasterxml.jackson.annotation.JsonIgnore)")
+    public void jsonIgnore(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        log.info("JsonIgnore aop start");
         joinPoint.proceed();
-        log.info("controller aop end");
+        log.info("JsonIgnore aop end");
     }
+
+
 }
