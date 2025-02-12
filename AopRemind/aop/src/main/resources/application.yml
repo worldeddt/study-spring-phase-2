@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: aop
+
+
+server:
+  host: localhost
+  port: 8443
+
+
