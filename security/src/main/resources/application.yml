@@ -1,0 +1,16 @@
+server:
+  port: 8099
+
+spring:
+  application:
+    name: security
+  security:
+    user:
+      name: admin
+      password: admin
+
+
+security:
+  secret_key: "testtesttest"
+  access_token_expiration: 1000 * 60 * 30 // 30?
+  refresh_token_expiration: 1000 * 60 * 60 * 24 * 7; // 7?
