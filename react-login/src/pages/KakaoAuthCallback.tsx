@@ -5,6 +5,8 @@ import axios from "axios";
 const KakaoAuthCallback = () => {
   const navigate = useNavigate();
   const isCalled = useRef(false);
+  const auth_url = "http://localhost:8081/api/auth/kakao";
+  const API_LOG_OUT = "https://kapi.kakao.com/v1/user/logout"
 
   useEffect(() => {
     if (isCalled.current) return;
@@ -19,34 +21,12 @@ const KakaoAuthCallback = () => {
       }
 
       try {
-        // ✅ 카카오 토큰 요청
         const response = await axios.post(
-          "https://kauth.kakao.com/oauth/token",
-          new URLSearchParams({
-            grant_type: "authorization_code",
-            client_id: import.meta.env.VITE_KAKAO_REST_API_KEY,
-            redirect_uri: import.meta.env.VITE_KAKAO_REDIRECT_URI,
-            code,
-          }),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+          auth_url, {code},
+          { withCredentials: true}
         );
 
-        console.log(response);
-        const { access_token } = response.data;
-
-        // ✅ 사용자 정보 요청
-        const userInfo = await axios.get("https://kapi.kakao.com/v2/user/me", {
-          headers: { Authorization: `Bearer ${access_token}` },
-        });
-
-        if (!userInfo.data || !userInfo.data.id) {
-          alert("로그인 실패");
-          console.log("로그인 아이디 누락");
-          navigate("/");
-        }
-
-        localStorage.setItem("user_info", JSON.stringify(userInfo.data));
-        localStorage.setItem("user_token", access_token);
+        console.log("로그인 성공:", response.data);
         navigate("/home");
       } catch (e) {
         console.error("로그인 실패 : ", e);
@@ -56,7 +36,40 @@ const KakaoAuthCallback = () => {
     getToken();
   }, []);
 
-  return <h2>카카오 로그인 처리 중...</h2>;
+
+  const cancelLogin = async () => {
+
+    if (!localStorage.getItem("user_token")) {
+      navigate("/");
+    } else {
+      const response = await axios.post(API_LOG_OUT, {},
+        {
+          headers:
+            {
+              "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+              "Authorization": ` Bearer ${localStorage.getItem("user_token")}`
+            }
+        }
+      );
+
+      if (!response) {
+        alert("로그아웃 실패");
+        return;
+      }
+
+      localStorage.removeItem("user_info");
+      localStorage.removeItem("user_token");
+
+      navigate("/");
+    }
+  }
+
+  return (
+    <div>
+      <h2>카카오 로그인 처리 중...</h2>
+      <button onClick={cancelLogin}> 로그인 취소</button>
+    </div>
+  );
 };
 
 export default KakaoAuthCallback;
