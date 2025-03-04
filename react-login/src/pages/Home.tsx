@@ -1,14 +1,18 @@
-import {JSX, useEffect} from "react";
+import {JSX, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 
 const Home = ():JSX.Element => {
   const navigate = useNavigate();
+  const isCalled = useRef(false);
   const API_LOG_OUT = "https://kapi.kakao.com/v1/user/logout"
 
   useEffect(() => {
     const item = localStorage.getItem("user_info");
+
+    if (isCalled.current) return;
+    isCalled.current = true;
 
     if (!item) {
       alert("로그인 필요");
