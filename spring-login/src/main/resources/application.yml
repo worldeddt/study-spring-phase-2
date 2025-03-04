@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-login
+
+server:
+  port: 8081
