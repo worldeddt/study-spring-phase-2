@@ -8,7 +8,7 @@ const Home = ():JSX.Element => {
   const {isAuthenticated} = useAuth();
   const navigate = useNavigate();
   const isCalled = useRef(false);
-  const API_LOG_OUT = "https://kapi.kakao.com/v1/user/logout"
+  const API_LOG_OUT = "http://localhost:8081/api/auth/logout"
 
   useEffect(() => {
 
@@ -29,23 +29,12 @@ const Home = ():JSX.Element => {
       navigate("/");
     }
 
-    const response = await axios.post(API_LOG_OUT, {},
-      {
-        headers:
-          {
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": ` Bearer ${localStorage.getItem("user_token")}`
-          }
-      }
-    );
+    const response = await axios.post(API_LOG_OUT, {withCredentials: true });
 
     if (!response) {
       alert("로그아웃 실패");
       return;
     }
-
-    localStorage.removeItem("user_info");
-    localStorage.removeItem("user_token");
 
     navigate("/");
   }
