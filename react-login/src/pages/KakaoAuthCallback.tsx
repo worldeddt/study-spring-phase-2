@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {useAuth} from "../components/AuthProvider.tsx";
 
 const KakaoAuthCallback = () => {
+  const {isAuthenticated, setIsAuthenticated} = useAuth();
   const navigate = useNavigate();
   const isCalled = useRef(false);
   const auth_url = "http://localhost:8081/api/auth/kakao";
@@ -27,6 +29,8 @@ const KakaoAuthCallback = () => {
         );
 
         console.log("로그인 성공:", response.data);
+
+        setIsAuthenticated(true)
         navigate("/home");
       } catch (e) {
         console.error("로그인 실패 : ", e);
@@ -38,8 +42,7 @@ const KakaoAuthCallback = () => {
 
 
   const cancelLogin = async () => {
-
-    if (!localStorage.getItem("user_token")) {
+    if (!isAuthenticated) {
       navigate("/");
     } else {
       const response = await axios.post(API_LOG_OUT, {},
@@ -57,10 +60,7 @@ const KakaoAuthCallback = () => {
         return;
       }
 
-      localStorage.removeItem("user_info");
-      localStorage.removeItem("user_token");
-
-      navigate("/");
+      setIsAuthenticated(false);
     }
   }
 
