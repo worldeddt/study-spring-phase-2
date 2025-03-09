@@ -83,7 +83,11 @@ public class AuthController {
 
         Cookie[] cookies = request.getCookies();
 
+        log.info("request : {}" , new ObjectMapper().writeValueAsString(cookies));
+
         String accessToken = null;
+
+        log.info("request.getCookies() : {}", request.getCookies());
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {

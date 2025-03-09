@@ -2,5 +2,12 @@ spring:
   application:
     name: spring-login
 
+
 server:
   port: 8081
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: eddy86
+    key-store-type: PKCS12
+    key-alias: mysslkey
+    enabled: true
