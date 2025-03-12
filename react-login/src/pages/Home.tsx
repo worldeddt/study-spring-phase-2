@@ -29,13 +29,14 @@ const Home = ():JSX.Element => {
       navigate("/");
     }
 
-    const response = await axios.post(API_LOG_OUT, {withCredentials: true });
+    const response = await axios.get(API_LOG_OUT, {withCredentials: true });
 
     if (!response) {
       alert("로그아웃 실패");
       return;
     }
 
+    alert(`로그아웃 성공`)
     navigate("/");
   }
 

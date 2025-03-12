@@ -65,7 +65,7 @@ public class AuthController {
 
             Cookie cookie = new Cookie("access_token", accessToken);
             cookie.setHttpOnly(true);
-            cookie.setSecure(true); // HTTPS 환경에서만 사용
+            cookie.setSecure(false); // HTTPS 환경에서만 사용
             cookie.setPath("/");
             cookie.setMaxAge(60 * 60); // 1시간 유지
 
@@ -78,10 +78,12 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
 
         Cookie[] cookies = request.getCookies();
+
+        log.info("request.getCookies() : {}", request.getCookies());
 
         String accessToken = null;
 
@@ -114,7 +116,7 @@ public class AuthController {
         // ✅ 쿠키를 빈 값으로 설정하고 Max-Age를 0으로 만들어 삭제
         Cookie cookie = new Cookie("access_token", null);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true); // HTTPS 환경에서만 사용
+        cookie.setSecure(false); // HTTPS 환경에서만 사용
         cookie.setPath("/"); // 전체 도메인에서 적용
         cookie.setMaxAge(0); // ✅ 즉시 만료
         response.addCookie(cookie);
@@ -127,6 +129,7 @@ public class AuthController {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
+                log.info("cookie : {}", cookie);
                 if ("access_token".equals(cookie.getName())) {
                     return true; // ✅ 로그인 상태 유지
                 }
